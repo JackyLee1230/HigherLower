@@ -383,6 +383,8 @@ export default function Homepage(props) {
 								margin: "auto",
 								gap: "12px",
 								fontSize: "26px",
+								textAlign: "center",
+								marginBottom: "3%",
 							}}
 						>
 							{left.name}
@@ -395,9 +397,52 @@ export default function Homepage(props) {
 								margin: "auto",
 								gap: "12px",
 								fontSize: "24px",
+								textAlign: "center",
 							}}
 						>
-							This Repo Has {left.Stars} Stars
+							Language: {left.Language}
+						</div>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								margin: "auto",
+								gap: "12px",
+								fontSize: "24px",
+								margin: "0 5%",
+								textAlign: "center",
+							}}
+						>
+							{left.Description}
+						</div>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								margin: "auto",
+								gap: "12px",
+								fontSize: "24px",
+								textAlign: "center",
+							}}
+						>
+							Update Frequency: {left.GrowthPattern}
+						</div>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								margin: "auto",
+								gap: "12px",
+								fontSize: "24px",
+								marginTop: "5%",
+								textAlign: "center",
+							}}
+						>
+							This Repo Has
+							<span style={{ color: "red" }}>{left.Stars}</span> Stars!
 						</div>
 					</div>
 					<div
@@ -417,9 +462,51 @@ export default function Homepage(props) {
 								margin: "auto",
 								gap: "12px",
 								fontSize: "26px",
+								textAlign: "center",
+								marginBottom: "3%",
 							}}
 						>
-							{right.name} {right.Stars}
+							{right.name}
+						</div>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								margin: "auto",
+								gap: "12px",
+								fontSize: "24px",
+								textAlign: "center",
+							}}
+						>
+							Language: {right.Language}
+						</div>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								margin: "auto",
+								gap: "12px",
+								fontSize: "24px",
+								margin: "0 5%",
+								textAlign: "center",
+							}}
+						>
+							{right.Description}
+						</div>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								margin: "auto",
+								gap: "12px",
+								fontSize: "24px",
+								textAlign: "center",
+							}}
+						>
+							Update Frequency: {right.GrowthPattern}
 						</div>
 					</div>
 				</div>
