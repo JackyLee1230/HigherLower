@@ -67,6 +67,13 @@ export default function Homepage(props) {
 	const [left, setLeft] = useState([]);
 	const [right, setRight] = useState([]);
 
+	const [openCorrectSnackbar, setOpenCorrectSnackbar] = useState(false);
+	const [openWrongSnackbar, setOpenWrongSnackbar] = useState(false);
+	const handleCloseCorrectSnackbar = () => setOpenCorrectSnackbar(false);
+	const handleCloseWrongSnackbar = () => setOpenWrongSnackbar(false);
+	const handleOpenCorrectSnackbar = () => setOpenCorrectSnackbar(true);
+	const handleOpenWrongSnackbar = () => setOpenWrongSnackbar(true);
+
 	const [openLost, setOpenLost] = useState(false);
 
 	const [openType, setOpenType] = useState(false);
@@ -149,16 +156,20 @@ export default function Homepage(props) {
 	// if it isnt, stop
 	const handleHigherClick = () => {
 		if (right.Stars > left.Stars) {
+			// CORRECT
+			handleOpenCorrectSnackbar();
+			let oldRight = right.name;
 			setLeft(right);
 			// randomly select a new right item that isnt the left item
-			const newRight = data[Math.floor(Math.random() * data.length)];
-			if (newRight.name === left.name) {
-				handleHigherClick();
-			} else {
-				setRight(newRight);
+			let newRight = data[Math.floor(Math.random() * data.length)];
+			while (newRight.name === oldRight) {
+				newRight = data[Math.floor(Math.random() * data.length)];
 			}
+			setRight(newRight);
 			setScore(score + 1);
 		} else {
+			// INCORRECT
+			handleOpenWrongSnackbar();
 			setLastScore(score);
 			setScore(0);
 			setOpenLost(true);
@@ -176,15 +187,19 @@ export default function Homepage(props) {
 
 	const handleLowerClick = () => {
 		if (right.Stars < left.Stars) {
+			// CORRECT
+			handleOpenCorrectSnackbar();
+			let oldRight = right.name;
 			setLeft(right);
-			const newRight = data[Math.floor(Math.random() * data.length)];
-			if (newRight.name === left.name) {
-				handleLowerClick();
-			} else {
-				setRight(newRight);
+			let newRight = data[Math.floor(Math.random() * data.length)];
+			while (newRight.name === oldRight) {
+				newRight = data[Math.floor(Math.random() * data.length)];
 			}
+			setRight(newRight);
 			setScore(score + 1);
 		} else {
+			// INCORRECT
+			handleOpenWrongSnackbar();
 			setLastScore(score);
 			setScore(0);
 			setOpenLost(true);
@@ -200,14 +215,11 @@ export default function Homepage(props) {
 		}
 	};
 
-	// function that upload the lastScore together with current Time to the firebase realtime database
-
 	const uploadScore = () => {
 		const data = {
 			time: time,
 			score: lastScore,
 		};
-		console.log(data);
 		set(ref(db, `/${auth.currentUser.uid}/${uuid}`), data);
 		// if the lastScore is greater than the highScore, then set the highScore to the lastScore
 		if (lastScore > highScore) {
@@ -225,6 +237,20 @@ export default function Homepage(props) {
 				setHighScore={setHighScore}
 				results={results}
 			/>
+			<Snackbar
+				open={openCorrectSnackbar}
+				autoHideDuration={6000}
+				onClose={handleCloseCorrectSnackbar}
+			>
+				<Alert severity="success">Correct! It had {right.Stars} Stars!</Alert>
+			</Snackbar>
+			<Snackbar
+				open={openWrongSnackbar}
+				autoHideDuration={6000}
+				onClose={handleCloseWrongSnackbar}
+			>
+				<Alert severity="error">Incorect! It had {right.Stars} Stars!</Alert>
+			</Snackbar>
 			<Modal
 				open={openLost}
 				onClose={handleOpenLost}
@@ -393,7 +419,7 @@ export default function Homepage(props) {
 								fontSize: "26px",
 							}}
 						>
-							{right.name}
+							{right.name} {right.Stars}
 						</div>
 					</div>
 				</div>
