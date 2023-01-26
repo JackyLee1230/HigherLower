@@ -361,6 +361,18 @@ export default function Homepage(props) {
 						>
 							{left.name}
 						</div>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								margin: "auto",
+								gap: "12px",
+								fontSize: "24px",
+							}}
+						>
+							This Repo Has {left.Stars} Stars
+						</div>
 					</div>
 					<div
 						className="right"
@@ -402,7 +414,7 @@ export default function Homepage(props) {
 					}}
 				>
 					<Typography variant="h4" component="h3" style={{}}>
-						Is {right.name} Higher or Lower?
+						Is {right.name}'s Stars?
 					</Typography>
 					<Button
 						variant="contained"
@@ -411,6 +423,7 @@ export default function Homepage(props) {
 					>
 						Higher
 					</Button>
+
 					<Button
 						variant="contained"
 						style={{ borderRadius: "12px", width: "30%" }}
